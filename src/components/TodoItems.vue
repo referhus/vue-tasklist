@@ -44,12 +44,11 @@
       label="Введите дело"
       solo
       @keydown.enter="createTask"
-      class="mt-4"
     >
     </v-text-field>
     <v-btn
      elevation="2"
-     class="mb-2 theme--dark"
+     class="theme--dark"
      @click="createTask"
     >Добавить</v-btn>
   </div>
@@ -104,9 +103,10 @@
 
 <style lang="scss">
   .newtaskend {
+    width: 60%;
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    width: 700px;
     position: fixed;
     bottom: 0;
   }

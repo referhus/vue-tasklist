@@ -24,16 +24,15 @@
 <script>
   import TodoLists from './components/TodoLists.vue'
   import TodoItems from './components/TodoItems.vue'
-  
   export default {
-  components: {
-  TodoLists,
-  TodoItems
- },
-  data: () => ({
-    drawer: true
-  })
-}
+    components: {
+    TodoLists,
+    TodoItems
+   },
+    data: () => ({
+      drawer: true,
+    })
+  }
 </script>
 
 <style lang="scss">
