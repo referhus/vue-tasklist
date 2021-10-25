@@ -1,37 +1,51 @@
 <template>
   <div id="app">
     <v-app id="inspire">
-      <v-navigation-drawer
-      app
-      v-model="drawer"
-      style="width: 300px"
-      >
-      <TodoLists></TodoLists>
-      </v-navigation-drawer>
-      <v-app-bar class="theme--dark"
-      absolute
-      app>
-       <v-app-bar-nav-icon class="ml-9" @click="drawer = !drawer"></v-app-bar-nav-icon>
-       <v-toolbar-title><h4 class="text-h4 ml-9 white--text">Список дел</h4></v-toolbar-title>
-      </v-app-bar>
-      <v-main app>
-        <TodoItems></TodoItems>
-      </v-main> 
+      <div>
+       <v-container fluid fill-height pl-0 pr-0 pb-0 pt-0>
+          <v-navigation-drawer
+          app
+          permanent
+          style="width: 290px; 
+          overflow: hidden;"    
+          >
+            <Lists></Lists>
+          </v-navigation-drawer>
+           <v-app-bar class="theme--dark"
+          style="position: fixed;"
+           app>
+            <v-toolbar-title style="width: 100%"><h4 class="text-center text-h4 ml-9 white--text"> Список дел {{listId}} </h4></v-toolbar-title>
+          </v-app-bar>
+          <v-main app class="ml-9" style="width: 100%;">
+<!--            <router-view name="tasks">
+ -->       <Tasks></Tasks>
+           <Notification></Notification>
+<!--            </router-view>
+ -->      </v-main> 
+      </v-container>
+     </div>
     </v-app>
   </div>
 </template>
 
 <script>
-  import TodoLists from './components/TodoLists.vue'
-  import TodoItems from './components/TodoItems.vue'
+  import Lists from './components/Lists.vue'
+  import Tasks from './components/Tasks.vue'
+  import Notification from './components/Notification.vue'
   export default {
     components: {
-    TodoLists,
-    TodoItems
+    Lists,
+    Tasks,
+    Notification
    },
     data: () => ({
-      drawer: true,
-    })
+    }),
+    computed: {
+   listId() {
+    return this.$route.params.id;
+   }
+
+  }
   }
 </script>
 

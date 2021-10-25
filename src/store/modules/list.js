@@ -1,37 +1,48 @@
-  export default {
+ import axios from "axios";
 
+  export default {
   state: {
    lists: []
   },
-  newList: null,
   getters : {
-   allLists(state) {
+    LISTS(state) {
     return state.lists
-   }
+   },
   },
   mutations: {
-   updateLists(state, lists) {
+   SET_LISTS(state, lists) {
     state.lists = lists
    },
-   createList(state, newList) {
-    let lists = state.lists
-      lists.push(newList)
-      state.lists = lists
-   },
-   deleteList(state, id) {
+    ADD_LIST: (state, lists) => {
+      state.lists.push(lists);
+    },
+    deleteList(state, id) {
     let lists = state.lists
     lists.splice(id, 1)
       state.lists = lists    
    }
   },
   actions: {
-   async fetchLists(ctx) {
-    const res = await fetch(
-     "https://jsonplaceholder.typicode.com/todos?_limit=4"
-     );
-    const lists = await res.json();
+  async GET_LISTS({commit}) {
+      let {data} = await axios.get(`lists`);
+      commit('SET_LISTS', data)
+    },
+  POST_LIST ({ commit }, lists) {
+    return new Promise((resolve, reject) => {
+        axios
+          .post(`lists`, lists)
+          .then(({ data, status }) => {
+            commit("ADD_LIST", data);
+            if (status === 200 || status === 201) {
+              resolve({ data, status });
+            }
+          })
+          .catch(error => {
+            reject(error);
+      })
 
-    ctx.commit('updateLists', lists)
-   }
-  },
+      });
+    },
+
+  }
 }
