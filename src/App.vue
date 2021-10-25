@@ -20,6 +20,7 @@
 <!--            <router-view name="tasks">
  -->       <Tasks></Tasks>
            <Notification></Notification>
+           <v-divider></v-divider>
 <!--            </router-view>
  -->      </v-main> 
       </v-container>

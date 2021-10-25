@@ -6,6 +6,7 @@
           <Task v-bind:key="key" :task="task" :index="key"></Task>
         </template>
       </v-list>
+
         <v-card-actions>
           <CreateTask></CreateTask>
       </v-card-actions>

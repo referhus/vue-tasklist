@@ -6,13 +6,12 @@
       label="Введите название списка"
       solo
       @keydown.enter="CreateList"
-      class="mt-2"
     ></v-text-field>   
 
     <v-btn
      block
      elevation="2"
-     class="mb-2 theme--dark"
+     class="mb-8 pb-6 pt-6 theme--dark"
      @click="CreateList"
     >Создать список</v-btn>
   </div>

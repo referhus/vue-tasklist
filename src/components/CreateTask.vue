@@ -1,32 +1,33 @@
 <template>
-  <v-container>  
-  <div style="position: fixed; bottom: 0; background: #fff; width: 100%; overflow: hidden;"
-   class="d-flex align-content-center mt-3">
-    <div>
+  <v-container>      
+    <v-row style="position: fixed; bottom: 0; background: #fff; width: 70%;">
+    <v-col cols="8">
      <v-text-field
      v-model="newTask"
      label="Введите дело"
-     style="width: 600px"
+     style="width: 650px"
      solo
      >
      </v-text-field>     
-    </div>
-    <div>
+    </v-col>
+    <v-col cols="3">
      <v-btn
      elevation="2"
      class="pa-6 theme--dark"
     >Добавить</v-btn> 
-    </div>
-    <div>
+    </v-col>
+    <v-col cols="1">
       <v-checkbox
         label="Срочно"
         color="red"
         value="important"
       >      
       </v-checkbox>
-    </div>
-  </div>
-    
+    </v-col>
+      
+    </v-row>
+<!--   </div>
+ -->    
   </v-container>
 </template>
 
