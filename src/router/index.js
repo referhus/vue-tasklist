@@ -7,7 +7,7 @@ import Tasks from "../components/Tasks.vue";
 Vue.use(VueRouter)
 
 const routes = [
- {
+  {
   path: "/list/:id",
   components: {tasks: Tasks },
   name: "tasks",
@@ -20,7 +20,7 @@ const router = new VueRouter({
   routes
 })
 
-axios.defaults.baseURL = "";
+// axios.defaults.baseURL = "";
 axios.defaults.withCredentials = true;
 
 
