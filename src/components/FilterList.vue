@@ -1,40 +1,38 @@
 <template>
   <div class="lists-filter pa-4">
-<!--     <select v-model="selectFilter" @change="filterList" id="list-filter" > 
-      <option value="all" selected>Все</option> 
-      <option value="done">Завершенные</option> 
-      <option value="not-done">Незавершенные</option> 
-    </select> 
- -->  
-    <v-select :options="['Все', 'Незавершенные', 'Завершенные']"/>
+    <v-select v-model="selected.name" @change="filterList(selected.name)" :items="items" item-text="name"/>
   </div>
 </template>
 
 <script>
   export default {
     name: "filterList", 
+    data: () => ({
+    selected: {name: "Все", value: "all"},
+      items: [
+      { name: "Все", value: "all" },
+      { name: "Завершенные", value: "done" },
+      { name: "Незавершенные", value: "noDone" }
+      ] 
+    }),
    methods: {
-    filterList() { 
-      // this.setCurrentList(null); 
-      // switch (this.selectFilter) { 
-      //   case "all": this.lists = this.getAllLists 
-      //   break; 
-      //   case "done": this.lists = this.getDoneLists 
-      //   break; 
-      //   case "not-done": this.lists = this.getNotDoneLists 
-      //   break; 
-      // } 
+    filterList(selected) { 
+      switch (selected) { 
+        case "all": console.log('all'), this.lists = this.getAllLists 
+        break; 
+        case "done": console.log('done'), this.lists = this.getDoneLists 
+        break; 
+        case "noDone": console.log('noDone'), this.lists = this.getNotDoneLists 
+        break; 
+      } 
     },
 
    }
  }
 </script>
 
-<!-- <style>
+<style>
   .lists-filter {
-    width: 100%;
+    width: 90%;
   }
-  #list-filter {
-    padding: 10px;
-  }
-</style> -->
+</style>

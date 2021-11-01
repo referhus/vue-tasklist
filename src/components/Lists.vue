@@ -3,7 +3,7 @@
     <v-row justify="center">
       <FilterList></FilterList>   
     </v-row>
-    <v-row class="pl-6 pr-2" style="max-height: 70vh; height: 90%; overflow-y: scroll;">
+    <v-row class="pl-6 pr-2" style="max-height: 65vh; height: 90%; overflow-y: scroll;">
       <v-list-item class="mb-2" style="height: 30px;" 
       :to="{ name: 'tasks', params: {id: list.id} }"
       v-for="(list, key) in LISTS"

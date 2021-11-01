@@ -20,8 +20,9 @@ const router = new VueRouter({
   routes
 })
 
-// axios.defaults.baseURL = "";
+axios.defaults.baseURL = "https://shipilov-bogdan-api.academy.smartworld.team/";
 axios.defaults.withCredentials = true;
+
 
 
 export default router
