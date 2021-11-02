@@ -2,22 +2,19 @@ import axios from "axios";
 
   export default {
     state: {
-      lists: [
-      {
-        id: 1,
-        title: "Список 1"
-      },
-      {
-        id: 2,
-        title: "Список 2"
-      },
-      ]
+      lists: []
     },
 
     getters : {
       LISTS(state) {
         return state.lists
       },
+
+      LIST_TITLE: state => index => {
+       if (index) {
+        return state.lists.find(list => list.id === index).title;
+       }
+      }
 
     },
     mutations: {
@@ -51,14 +48,14 @@ import axios from "axios";
 
     actions: {
       async GET_LISTS({commit}) {
-        let {data} = await axios.get(`lists`);
+        let {data} = await axios.get(`list`);
         commit('SET_LISTS', data)
       },
 
       POST_LIST ({ commit }, lists) {
         return new Promise((resolve, reject) => {
           axios
-            .post(`lists`, lists)
+            .post(`list`, lists)
             .then(({ data, status }) => {
               commit("ADD_LIST", data);
               if (status === 200 || status === 201) {
@@ -75,7 +72,7 @@ import axios from "axios";
       DELETE_LIST: ({ commit }, { listId }) => {
         return new Promise((resolve, reject) => {
           axios
-            .delete(`lists/${listId}`)
+            .delete(`list/${listId}`)
             .then(({ status }) => {
               if (status === 204 || status === 200) {
                 commit("REMOVE_LIST", listId);
@@ -89,7 +86,7 @@ import axios from "axios";
       },
 
       GET_TASKS: async ({ commit }, lists) => {
-      let { data } = await axios.get(`lists/${lists}/tasks`);
+      let { data } = await axios.get(`list/${lists}/tasks`);
         commit("SET_TASKS", {
           data,
           listId: lists
@@ -97,7 +94,7 @@ import axios from "axios";
       },
 
       POST_TASK: async ({ commit }, { listId, taskTitle }) => {
-        let { data } = await axios.post(`lists/${listId}/tasks`, {
+        let { data } = await axios.post(`list/${listId}/tasks`, {
           title: taskTitle
         });
         commit("ADD_TASK", {
@@ -109,7 +106,7 @@ import axios from "axios";
       DELETE_TASK: ({ commit }, { listId, taskId }) => {
         return new Promise((resolve, reject) => {
           axios
-            .delete(`lists/${taskId}`)
+            .delete(`list/${taskId}`)
             .then(({ status }) => {
               if (status === 204) {
                 commit("REMOVE_TASK", { listId, taskId });

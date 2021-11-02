@@ -29,7 +29,9 @@
       CreateList() {
         this.$store
           .dispatch("POST_LIST", {
-            title: this.newList
+            attributes: {
+              name: this.newList,
+            } 
           })
           .then(response => {
           //   this.$store.commit("SET_NOTIFICATION", {

@@ -41,7 +41,7 @@
       async CreateTask() {
         await this.$store.dispatch("POST_TASK", {
           taskTitle: this.newTask,
-          listId: this.$route.params.id
+          listId: this.$route.params.data.attributes.name
         });      
       },
 
