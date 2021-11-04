@@ -8,7 +8,7 @@
           </v-flex>
           <v-flex lg9 pr-2>
             <v-app-bar class="theme--dark">
-              <v-toolbar-title style="width: 100%"><h4 class="text-center text-h4 ml-9 white--text"> Список дел "{{listId}}" </h4></v-toolbar-title>
+              <v-toolbar-title style="width: 100%"><h4 class="text-center text-h4 ml-9 white--text"> Список дел "{{}}" </h4></v-toolbar-title>
             </v-app-bar>
             <router-view name="tasks">
               <Tasks></Tasks>
@@ -36,12 +36,8 @@
     }),
 
     computed: {
-      listId() {
-        return this.$route.params.id;
-      }
-
-    }
   }
+}
 </script>
 
 <style lang="scss">

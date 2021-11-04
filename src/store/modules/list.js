@@ -9,13 +9,6 @@ import axios from "axios";
       LISTS(state) {
         return state.lists
       },
-
-      LIST_TITLE: state => index => {
-       if (index) {
-        return state.lists.find(list => list.id === index).title;
-       }
-      }
-
     },
     mutations: {
       SET_LISTS(state, lists) {
@@ -31,6 +24,7 @@ import axios from "axios";
 
       REMOVE_LIST: (state, listId) => {
         let rs = state.lists.filter(currentList => {
+          console.log(currentList)
           return currentList.id !== listId;
         });
 
@@ -49,7 +43,7 @@ import axios from "axios";
     actions: {
       async GET_LISTS({commit}) {
         let {data} = await axios.get(`list`);
-        commit('SET_LISTS', data)
+        commit('SET_LISTS', data.data.items)
       },
 
       POST_LIST ({ commit }, lists) {
@@ -69,7 +63,7 @@ import axios from "axios";
         });
       },
 
-      DELETE_LIST: ({ commit }, { listId }) => {
+      DELETE_LIST: ({ commit }, listId) => {
         return new Promise((resolve, reject) => {
           axios
             .delete(`list/${listId}`)
@@ -94,8 +88,8 @@ import axios from "axios";
       },
 
       POST_TASK: async ({ commit }, { listId, taskTitle }) => {
-        let { data } = await axios.post(`list/${listId}/tasks`, {
-          title: taskTitle
+        let {data} = await axios.post(`list/${listId}/tasks`, {
+          name: taskTitle
         });
         commit("ADD_TASK", {
           data,
@@ -103,20 +97,20 @@ import axios from "axios";
         });
       },
 
-      DELETE_TASK: ({ commit }, { listId, taskId }) => {
-        return new Promise((resolve, reject) => {
-          axios
-            .delete(`list/${taskId}`)
-            .then(({ status }) => {
-              if (status === 204) {
-                commit("REMOVE_TASK", { listId, taskId });
-                resolve(status);
-              }
-            })
-            .catch(error => {
-              reject(error);
-            });
-        });
-      },
+      // DELETE_TASK: ({ commit }, { listId, taskId }) => {
+      //   return new Promise((resolve, reject) => {
+      //     axios
+      //       .delete(`list/${taskId}`)
+      //       .then(({ status }) => {
+      //         if (status === 204) {
+      //           commit("REMOVE_TASK", { listId, taskId });
+      //           resolve(status);
+      //         }
+      //       })
+      //       .catch(error => {
+      //         reject(error);
+      //       });
+      //   });
+      // },
     }
   }

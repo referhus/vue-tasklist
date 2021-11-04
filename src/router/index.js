@@ -20,7 +20,7 @@ const router = new VueRouter({
   routes
 })
 
-let AUTH_TOKEN = 'ZGJ6UVJYeVF6cHVBTld5bm95WGY0amthVFRRbXl4QWg='
+let AUTH_TOKEN = 'R2w3YndHdXdDbzg0bGNvRTVaZ2s2RGlURGc2OXJibFo='
 
 axios.defaults.baseURL = "http://shipilov-bogdan-api.academy.smartworld.team/";
 
