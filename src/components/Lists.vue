@@ -31,6 +31,7 @@
   export default {
     name: "lists",
     components: { CreateList, FilterList },
+
     computed: {
      ...mapGetters(['LISTS']),
      ...mapActions(['GET_LISTS', 'DELETE_LIST']),
@@ -52,8 +53,8 @@
       },     
     },
 
-    mounted() {
-      this.$store.dispatch('GET_LISTS')
+    async mounted() {
+     await this.$store.dispatch('GET_LISTS')
     },
 
   }

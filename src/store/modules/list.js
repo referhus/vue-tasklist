@@ -2,30 +2,52 @@ import axios from "axios";
 
   export default {
     state: {
-      lists: []
+      lists: [],
+      currentList: []
     },
 
     getters : {
       LISTS(state) {
         return state.lists
       },
+
+      GET_CURRENT_LIST(state) {
+       return state.currentList
+      },
+
+      GET_DONE_LISTS: s => s.lists.filter(list => {
+      if (!list.tasks.find(task => task.completed == false) && list.tasks.length != 0) return true
+    }),
+
+     GET_NOT_DONE_LISTS: s => s.lists.filter(list => {
+      if (list.tasks.find(task => task.completed == false) && list.tasks.length != 0) return true
+    })
+
     },
     mutations: {
       SET_LISTS(state, lists) {
         state.lists = lists
       },
+
       ADD_LIST: (state, lists) => {
         state.lists.push(lists);
       },
 
-      ADD_TASK: (state, { data, listId }) => {
-        state.lists.find(list => list.id === listId).tasks.push(data);
+      ADD_TASK: (state, {data, id}) => {
+       state.lists.find((list) => (list.id == id)).tasks.push(data)
       },
 
-      REMOVE_LIST: (state, listId) => {
+      SET_CURRENT_LIST(state, id) {
+        state.currentList = state.lists.find(list => list.id == id)
+      },
+
+      SET_TASKS(state, {tasks, id}) {
+        state.lists.find((list) => (list.id == id)).tasks = tasks
+      },
+
+      REMOVE_LIST: (state, id) => {
         let rs = state.lists.filter(currentList => {
-          console.log(currentList)
-          return currentList.id !== listId;
+          return currentList.id !== id;
         });
 
         state.lists = [...rs];
@@ -41,9 +63,13 @@ import axios from "axios";
     },
 
     actions: {
-      async GET_LISTS({commit}) {
+      async GET_LISTS({commit, dispatch}) {
         let {data} = await axios.get(`list`);
         commit('SET_LISTS', data.data.items)
+        data.data.items.map(list => {
+        dispatch("GET_TASKS", list.id)
+      })
+
       },
 
       POST_LIST ({ commit }, lists) {
@@ -79,23 +105,33 @@ import axios from "axios";
         });
       },
 
-      GET_TASKS: async ({ commit }, lists) => {
-      let { data } = await axios.get(`list/${lists}/tasks`);
+
+      GET_TASKS: async ({ commit }, id) => {
+      const tasks = await axios.get(`task`);
         commit("SET_TASKS", {
-          data,
-          listId: lists
+          tasks: tasks.data.data,
+          id
         });
+        console.log(tasks.data.data)
       },
 
-      POST_TASK: async ({ commit }, { listId, taskTitle }) => {
-        let {data} = await axios.post(`list/${listId}/tasks`, {
-          name: taskTitle
-        });
-        commit("ADD_TASK", {
-          data,
-          listId
-        });
+
+      POST_TASK: ({ commit }, tasks) => {
+        return new Promise((resolve, reject) => {
+          axios
+            .post(`task`, tasks)
+            .then(({ data, status }) => {
+              commit("ADD_TASK", data);
+              if (status === 200 || status === 201) {
+                resolve({ data, status });
+              }
+            })
+            .catch(error => {
+              reject(error);
+            })
+          });
       },
+
 
       // DELETE_TASK: ({ commit }, { listId, taskId }) => {
       //   return new Promise((resolve, reject) => {

@@ -6,6 +6,7 @@
       label="Введите дело"
       style="width: 650px"
       solo
+      @keydown.enter="CreateTask"
       >
       </v-text-field>     
     </v-col>
@@ -20,7 +21,7 @@
       <v-checkbox
         label="Срочно"
         color="red"
-        value="important"
+        v-model="important"
       >      
       </v-checkbox>
     </v-col>
@@ -28,24 +29,30 @@
 </template>
 
 <script>
+  import {mapState} from 'vuex'
   export default {
     name: "CreateTask",
     data: () => ({
-    newTask: ""
+    newTask: "",
+    important: 0,
     }),
 
     computed: {
+      ...mapState(['currentList'])
     },
 
     methods: {
-      CreateTask() {
-       this.$store.dispatch("POST_TASK", {
+    CreateTask() {
+       this.$store
+        .dispatch("POST_TASK", {
           attributes: {
             name: this.newTask,
-            important: this.important,
+            is_completed: false,
+            list_id: this.$route.params.id,
+            urgency: this.important,
           },
-          listId: this.$route.params.id,
-        });      
+        })
+          this.newTask = '';
       },
 
     }

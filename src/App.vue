@@ -31,12 +31,6 @@
     Tasks,
     Notification
    },
-
-    data: () => ({
-    }),
-
-    computed: {
-  }
 }
 </script>
 
